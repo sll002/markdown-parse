@@ -13,14 +13,15 @@ public class MarkdownParse {
         while(currentIndex < markdown.length()) {
             int nextOpenBracket = markdown.indexOf("[", currentIndex);
             int nextCloseBracket = markdown.indexOf("]", nextOpenBracket);
-            int linkMarkStart = nextOpenBracket -1;
-            int lnkMarkEnd = nextCloseBracket +1 ;
+            int linkMarkStart = nextOpenBracket +1;
+            int lnkMarkEnd = nextCloseBracket -1 ;
             int openParen = markdown.indexOf("(", nextCloseBracket);
             int closeParen = markdown.indexOf(")", openParen);
             toReturn.add(markdown.substring(openParen + 1, closeParen));
             System.out.println(markdown.charAt(currentIndex));
             currentIndex = closeParen + 1;
             
+            String markStart = markdown.substring(linkMarkStart, '(');
             System.out.println(currentIndex);
             System.out.println(markdown.charAt(currentIndex-1));
         }
@@ -30,6 +31,8 @@ public class MarkdownParse {
 		Path fileName = Path.of(args[0]);
 	    String contents = Files.readString(fileName);
         ArrayList<String> links = getLinks(contents);
+        ArrayList<String> subLinks = getLinks(contents);
         System.out.println(links);
+
     }
 }
